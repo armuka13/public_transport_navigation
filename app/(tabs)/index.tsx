@@ -79,7 +79,7 @@ export default function HomeScreen() {
             <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3 mb-2 bg-white">
               <MaterialIcons name="trip-origin" size={18} color="#9CA3AF" />
               <TextInput
-                className="flex-1 ml-3 text-base text-gray-800"
+                className="flex-1 ml-3 text-base text-red-800"
                 placeholder="Nga ku?"
                 placeholderTextColor="#9CA3AF"
                 value={fromLocation}
