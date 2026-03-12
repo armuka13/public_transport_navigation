@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E30606',
     borderRadius: 40,
     marginHorizontal: 0, // Centered via translateX
+    
   },
   tabItem: {
     flex: 1,

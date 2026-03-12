@@ -47,10 +47,10 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View
-          className={`w-full ${isWide ? 'max-w-lg self-center' : ''} px-5 pt-4 mt-12`}
+          className={`w-full ${isWide ? 'max-w-lg self-center' : ''} px-5 pt-6 mt-12`}
         >
           {/* Header */}
-          <View className="items-center mb-4 mt-2">
+          <View className="items-center mb-8 mt-2">
             <Text className="text-2xl font-bold text-gray-900 tracking-wide">
               Kerko Udhetimin
             </Text>
@@ -58,7 +58,7 @@ export default function HomeScreen() {
           </View>
 
           {/* Date & Time */}
-          <View className="flex-row items-center justify-center gap-4 mb-5">
+          <View className="flex-row items-center justify-center gap-4 mb-8">
             <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-2">
               <MaterialIcons name="calendar-today" size={16} color="#6B7280" />
               <Text className="text-sm text-gray-600 ml-2 font-medium">
@@ -117,7 +117,7 @@ export default function HomeScreen() {
 
           {/* Search Button */}
           <TouchableOpacity
-            className="items-center justify-center bg-gray-900 rounded-full py-3.5 mb-6"
+            className="items-center justify-center bg-gray-900 rounded-full py-3.5 mb-8"
             activeOpacity={0.8}
           >
             <Text className="text-white font-bold text-base tracking-widest">
@@ -127,21 +127,18 @@ export default function HomeScreen() {
 
           {/* Info Banner */}
           <TouchableOpacity
-            className="flex-row w-full items-center bg-gray-500 px-5 py-3.5 mb-6"
+            className="flex-row w-screen items-center bg-gray-500 px-5 py-3.5 mb-6 h-15 ml-[-17.5]"
             activeOpacity={0.8}
           >
-            <View className="w-7 h-7 rounded-full bg-yellow-400 items-center justify-center mr-3">
-              <MaterialIcons name="warning" size={16} color="#1F2937" />
+            <View className="w-7 h-7 rounded-full bg-red-400 items-center justify-center mr-3">
+              <MaterialIcons name="wallet" size={16} color="#1F2937" />
             </View>
-            <Text className="flex-1 text-white text-sm font-medium">
+            <Text className="flex-1 text-white text-lg font-medium">
               Tashme ke bilete apo abonim?
             </Text>
-            <MaterialIcons name="add-circle-outline" size={22} color="#FFFFFF" />
+            <MaterialIcons name="arrow-right" size={22} color="#FFFFFF" />
           </TouchableOpacity>
 
-          <Text>
-            {"\n"}
-          </Text>
 
           {/* Recent Searches */}
           <View className="mb-4">
@@ -151,7 +148,6 @@ export default function HomeScreen() {
               </Text>
               <View className="h-1 w-32 bg-red-500 mt-1 rounded-full" />
             </View>
-
             {recentSearches.map((item) => (
               <TouchableOpacity
                 key={item.id}
