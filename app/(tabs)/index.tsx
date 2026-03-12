@@ -1,98 +1,187 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  View
+} from 'react-native';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [fromLocation, setFromLocation] = useState('');
+  const [toLocation, setToLocation] = useState('');
+  const { width } = useWindowDimensions();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  // Responsive: limit max width on tablets/web
+  const isWide = width > 600;
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  const timeStr = now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+
+  const handleSwap = () => {
+    setFromLocation(toLocation);
+    setToLocation(fromLocation);
+  };
+
+  const recentSearches = [
+    { id: '1', from: 'TEG', to: 'Sheshi Skenderbej' },
+  ];
+
+  return (
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="pb-6"
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          className={`w-full ${isWide ? 'max-w-lg self-center' : ''} px-5 pt-4 mt-12`}
+        >
+          {/* Header */}
+          <View className="items-center mb-4 mt-2">
+            <Text className="text-2xl font-bold text-gray-900 tracking-wide">
+              Kerko Udhetimin
+            </Text>
+            <View className="h-1 w-40 bg-red-500 mt-1  rounded-full" />
+          </View>
+
+          {/* Date & Time */}
+          <View className="flex-row items-center justify-center gap-4 mb-5">
+            <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-2">
+              <MaterialIcons name="calendar-today" size={16} color="#6B7280" />
+              <Text className="text-sm text-gray-600 ml-2 font-medium">
+                {dateStr}
+              </Text>
+            </View>
+            <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-2">
+              <MaterialIcons name="access-time" size={16} color="#6B7280" />
+              <Text className="text-sm text-gray-600 ml-2 font-medium">
+                {timeStr}
+              </Text>
+            </View>
+          </View>
+
+          {/* Search Fields */}
+          <View className="relative mb-4">
+            {/* From Field */}
+            <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3 mb-2 bg-white">
+              <MaterialIcons name="trip-origin" size={18} color="#9CA3AF" />
+              <TextInput
+                className="flex-1 ml-3 text-base text-gray-800"
+                placeholder="Nga ku?"
+                placeholderTextColor="#9CA3AF"
+                value={fromLocation}
+                onChangeText={setFromLocation}
+              />
+            </View>
+
+            {/* Swap Button */}
+            <TouchableOpacity
+              onPress={handleSwap}
+              className="absolute right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-red-600 items-center justify-center shadow-lg"
+              style={{
+                elevation: 4,
+                shadowColor: '#DC2626',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 4,
+              }}
+            >
+              <MaterialIcons name="swap-vert" size={22} color="#FFFFFF" />
+            </TouchableOpacity>
+
+            {/* To Field */}
+            <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3 bg-white">
+              <MaterialIcons name="location-on" size={18} color="#9CA3AF" />
+              <TextInput
+                className="flex-1 ml-3 text-base text-gray-800"
+                placeholder="Per ku?"
+                placeholderTextColor="#9CA3AF"
+                value={toLocation}
+                onChangeText={setToLocation}
+              />
+            </View>
+          </View>
+
+          {/* Search Button */}
+          <TouchableOpacity
+            className="items-center justify-center bg-gray-900 rounded-full py-3.5 mb-6"
+            activeOpacity={0.8}
+          >
+            <Text className="text-white font-bold text-base tracking-widest">
+              KERKO
+            </Text>
+          </TouchableOpacity>
+
+          {/* Info Banner */}
+          <TouchableOpacity
+            className="flex-row w-full items-center bg-gray-500 px-5 py-3.5 mb-6"
+            activeOpacity={0.8}
+          >
+            <View className="w-7 h-7 rounded-full bg-yellow-400 items-center justify-center mr-3">
+              <MaterialIcons name="warning" size={16} color="#1F2937" />
+            </View>
+            <Text className="flex-1 text-white text-sm font-medium">
+              Tashme ke bilete apo abonim?
+            </Text>
+            <MaterialIcons name="add-circle-outline" size={22} color="#FFFFFF" />
+          </TouchableOpacity>
+
+          <Text>
+            {"\n"}
+          </Text>
+
+          {/* Recent Searches */}
+          <View className="mb-4">
+            <View className="items-center mb-4">
+              <Text className="text-lg font-bold text-gray-900 tracking-wide">
+                Kerkimet e fundit
+              </Text>
+              <View className="h-1 w-32 bg-red-500 mt-1 rounded-full" />
+            </View>
+
+            {recentSearches.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                className="flex-row items-center bg-white border border-gray-200 rounded-2xl px-4 py-4 mb-3 shadow-sm"
+                activeOpacity={0.7}
+                style={{
+                  elevation: 2,
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 1 },
+                  shadowOpacity: 0.08,
+                  shadowRadius: 6,
+                }}
+              >
+                <View className="w-11 h-11 rounded-full bg-gray-900 items-center justify-center mr-4">
+                  <MaterialIcons name="directions-bus" size={22} color="#FFFFFF" />
+                </View>
+                <View className="flex-1">
+                  <Text className="text-base font-bold text-gray-900">
+                    {item.from}
+                  </Text>
+                  <Text className="text-sm text-gray-500 mt-0.5">
+                    {item.to}
+                  </Text>
+                </View>
+                <MaterialIcons name="chevron-right" size={22} color="#9CA3AF" />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
