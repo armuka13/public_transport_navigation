@@ -1,4 +1,5 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -14,6 +15,7 @@ export default function HomeScreen() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();   
 
   // Responsive: limit max width on tablets/web
   const isWide = width > 600;
@@ -126,16 +128,17 @@ export default function HomeScreen() {
           </TouchableOpacity>
 
           {/* Info Banner */}
-          <TouchableOpacity
+          <TouchableOpacity onPress={() => navigation.navigate('explore')}
             className="flex-row w-screen items-center bg-gray-500 px-5 py-3.5 mb-6 h-15 ml-[-17.5]"
             activeOpacity={0.8}
           >
             <View className="w-7 h-7 rounded-full bg-red-400 items-center justify-center mr-3">
               <MaterialIcons name="wallet" size={16} color="#1F2937" />
             </View>
-            <Text className="flex-1 text-white text-lg font-medium">
-              Tashme ke bilete apo abonim?
-            </Text>
+
+              <Text className="flex-1 text-white text-lg font-medium">
+                Tashme ke bilete apo abonim?
+              </Text>
             <MaterialIcons name="arrow-right" size={22} color="#FFFFFF" />
           </TouchableOpacity>
 

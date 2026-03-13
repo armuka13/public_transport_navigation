@@ -51,8 +51,8 @@ export default function TabLayout() {
   };
 
   return (
-    <Tabs 
-      tabBar={(props) => <MyTabBar {...props} />} 
+    <Tabs
+      tabBar={(props) => <MyTabBar {...props} />}
       screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen
@@ -83,7 +83,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
-    position: 'absolute',
+    position: 'absolute', //Heq pjesen e zeze poshte
     bottom: 25,
     height: 70,
     backgroundColor: 'white',
@@ -100,11 +100,12 @@ const styles = StyleSheet.create({
   },
   slider: {
     position: 'absolute',
-    height: '100%', // Pill slightly smaller than bar
-    backgroundColor: '#E30606',
+    height: '100%',
+    backgroundColor: 'red',
+    opacity: 0.8,
     borderRadius: 40,
     marginHorizontal: 0, // Centered via translateX
-    
+
   },
   tabItem: {
     flex: 1,
